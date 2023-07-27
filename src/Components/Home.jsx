@@ -26,7 +26,7 @@ function MainCarousel({trending}){
             console.log("rating ",rating);
             return (
                <div key={index} className='carousel-item'>
-                <img style={{width: "80%",objectFit:"cover" , opacity:"0.5"}} src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}></img>
+                <img style={{width: "80%",objectFit:"contain" , opacity:"0.6"}} src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}></img>
                 <div className='movie-details'>
                    <Text style={{
                     color: "white",
@@ -86,6 +86,7 @@ function MainCarousel({trending}){
 }
 function Trending({trending}){
   console.log("inside trending ");
+  const navigate=useNavigate();
   return (
     <div className='trending'>
       <Text style={{marginLeft: "10px"}}>Trending Now</Text>
@@ -98,7 +99,9 @@ function Trending({trending}){
                 flexShrink: "0",
                 margin:"5px",
                 objectFit:"cover",
-              }}  src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}></img>
+              }}  src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`} onClick={()=>{
+                navigate(`/watchmovie/${movie.id}`);
+              }}></img>
             )
           })
         }
