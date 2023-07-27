@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './Components/Home';
 import PageNotFound from './Components/PageNotFound'
 import Categories from './Components/Categories';
-import Videoplayer from './Components/videoplayer';
+import Videoplayer from './Components/Videoplayer';
 function App() {
 
   return (
