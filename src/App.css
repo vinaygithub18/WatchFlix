@@ -192,3 +192,18 @@ line-height: normal;
     font-weight: 400;
     line-height: normal;
 }
+.toggle-container{
+    display: none;
+}
+
+@media screen and (max-width: 700px){
+    .toggle-container{
+        display: block;
+    }
+    .header-menu{
+        display: none;
+    }
+    .header-end{
+        display: none;
+    }
+}

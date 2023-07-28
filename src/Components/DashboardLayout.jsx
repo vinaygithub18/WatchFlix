@@ -5,6 +5,82 @@ import { useContext } from 'react'
 import { Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 import {Search2Icon ,BellIcon} from '@chakra-ui/icons'
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import MenuIcon from '@mui/icons-material/Menu';
+
+function TemporaryDrawer() {
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 , height:"100"}}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {['Movies','Tv Series','Documentation','Categories'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <Link className='header-menu-item' to='/categories'>{text}</Link>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </Box>
+  );
+
+  return (
+    <div  className='toggle-container'>
+      {['right'].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button onClick={toggleDrawer(anchor, true)} className='toggle-button'>
+            <MenuIcon style={{color: "white"}}/>
+          </Button>
+          <Drawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+            PaperProps={{
+              sx: {
+                backgroundColor: "#1A1A1D",
+                color: "white",
+              },
+            }}
+          >
+            {list(anchor)}
+          </Drawer>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
+
 
 function Footer(){
   return (
@@ -33,7 +109,7 @@ function Footer(){
         <Text className='footer-item'>-Terms & Condition</Text>
         <Text className='footer-item'>-Cookies</Text>
         <Text className='footer-item'>-FAQ</Text>
-      </div>
+      </div>  
     </div>
   )
 }
@@ -73,6 +149,7 @@ function Header(props){
           textDecoration: "none"
         }} >Sign up</Link>
       </div>
+      <TemporaryDrawer/>
     </div>
   )
 }
