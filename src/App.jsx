@@ -4,6 +4,7 @@ import Home from './Components/Home';
 import PageNotFound from './Components/PageNotFound'
 import Categories from './Components/Categories';
 import Videoplayer from './Components/Videoplayer';
+import WatchMovie from './Components/WatchMovie';
 function App() {
 
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/categories" element={<Categories/>}/>
             <Route path="/videoplay" element={<Videoplayer/>}/>
+            <Route path="/watchmovie/:id" element={<WatchMovie/>}/>
             <Route path="*" element={<PageNotFound/>}/>
         </Routes>
     </BrowserRouter>
