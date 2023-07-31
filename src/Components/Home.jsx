@@ -19,61 +19,31 @@ function MainCarousel({trending}){
     navigate('/videoplay');
   }
   return (
-    <Carousel showThumbs={false} showStatus={false} autoPlay={true} infiniteLoop={true}>
+    <div className='carousel-component'>
+    <Carousel showThumbs={false} showStatus={false} infiniteLoop={true} showIndicators={false}>
         {
           trending.map((movie,index)=>{
             const rating=Math.floor((movie.vote_average)/2);
             console.log("rating ",rating);
             return (
+              
                <div key={index} className='carousel-item'>
-                <img style={{width: "80%",objectFit:"contain" , opacity:"0.6"}} src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}></img>
+                <img style={{width: "100%",objectFit:"contain" , opacity:"0.6"}} src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}></img>
                 <div className='movie-details'>
-                   <Text style={{
-                    color: "white",
-                    fontFamily: "Oswald",
-                    fontSize: "48px",
-                    fontStyle: "normal",
-                    fontWeight: "700",
-                    lineHeight: "normal",
-                   }}>{movie.original_title}</Text>
-                   <Text style={{
-                    color: "#FFF",
-                    fontFamily: "Overpass",
-                    fontSize: "18px",
-                    fontStyle: "normal",
-                    fontWeight: "500",
-                    lineHeight: "24px", /* 133.333% */
-                    letterSpacing: "0.54px",
-                    textAlign:"left",
-                   }}>{movie.overview}</Text>
+                   <Text className='title'>{movie.original_title}</Text>
+                   <Text className='desc'>{movie.overview}</Text>
                   <Rating name="read-only" value={rating} readOnly />
                   <div className='carousel-buttons'>
-                      <Button style={{background: "#DA3714",paddingRight:"10px", height:"45px",borderRadius:"20px", border:"none", color: "white"}}
+                      <Button className='watch-now-btn'
                       onClick={handleWatchNow}>
                         <PlayArrowIcon/> Watch Now</Button>
                       <div className='watchlist'>
                         <AddIcon style={{color: "white"}}/>
-                        <Text style={{
-                          color: "#FFF",
-                          fontFamily: "Overpass",
-                          fontSize: "15px",
-                          fontStyle: "normal",
-                          fontWeight: "300",
-                          lineHeight: "24px", /* 160% */
-                          letterSpacing: "0.45px"
-                        }}>WATCHLIST</Text>
+                        <Text className='watchlist-btn'>WATCHLIST</Text>
                       </div>
                       <div className='share'>
                           <ShareIcon style={{color: "white"}}/>
-                          <Text style={{
-                          color: "#FFF",
-                          fontFamily: "Overpass",
-                          fontSize: "15px",
-                          fontStyle: "normal",
-                          fontWeight: "300",
-                          lineHeight: "24px", /* 160% */
-                          letterSpacing: "0.45px"
-                        }}>SHARE</Text>
+                          <Text className='share-btn'>SHARE</Text>
                       </div>
                   </div>
                 </div>
@@ -82,14 +52,15 @@ function MainCarousel({trending}){
           })
         }   
     </Carousel>
+    </div>
   )
 }
-function Trending({trending}){
+function Trending({trending, category}){
   console.log("inside trending ");
   const navigate=useNavigate();
   return (
     <div className='trending'>
-      <Text style={{marginLeft: "10px"}}>Trending Now</Text>
+      <Text style={{marginLeft: "10px"}}>{category}</Text>
       <div className='trending-movies'>
         {
           trending.map((movie,index)=>{
@@ -110,21 +81,57 @@ function Trending({trending}){
   )
 }
 function Home() {
-  const options = {
+  const optionsTrending = {
     method: 'GET',
     url: 'https://api.themoviedb.org/3/trending/movie/day',
     headers: {accept: 'application/json',
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTExNmExODI3MGM2MjQwNDM2YjU5NTBkM2E5Nzk0MiIsInN1YiI6IjY0Yjc5MDQ0MTA5Y2QwMDBjN2IwOGI4NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6RvMsGmolIcMF89SdM8MndX6WvFp-k3BeR5Mve8iT4U', 
     }
   };
+  const optionsSuspense = {
+    method: 'GET',
+    url: "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+    headers: {accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTExNmExODI3MGM2MjQwNDM2YjU5NTBkM2E5Nzk0MiIsInN1YiI6IjY0Yjc5MDQ0MTA5Y2QwMDBjN2IwOGI4NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6RvMsGmolIcMF89SdM8MndX6WvFp-k3BeR5Mve8iT4U', 
+    }
+  };
+  const optionsScifi = {
+    method: 'GET',
+    url: "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200",
+    headers: {accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTExNmExODI3MGM2MjQwNDM2YjU5NTBkM2E5Nzk0MiIsInN1YiI6IjY0Yjc5MDQ0MTA5Y2QwMDBjN2IwOGI4NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6RvMsGmolIcMF89SdM8MndX6WvFp-k3BeR5Mve8iT4U', 
+    }
+  };
 
   const [trending,setTrending]=useState([]);
+  const [suspense,setSuspense]=useState([]);
+  const [scifi,setScifi]=useState([]);
   useEffect(()=>{
     axios
-    .request(options)
+    .request(optionsTrending)
     .then(function (response) {
       console.log("trending movies response ",response.data.results);
       setTrending(response.data.results);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+    //
+    axios
+    .request(optionsSuspense)
+    .then(function (response) {
+      console.log("trending movies response ",response.data.results);
+      setSuspense(response.data.results);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+    //
+    axios
+    .request(optionsScifi)
+    .then(function (response) {
+      console.log("trending movies response ",response.data.results);
+      setScifi(response.data.results);
     })
     .catch(function (error) {
       console.error(error);
@@ -133,7 +140,9 @@ function Home() {
   return (
     <DashboardLayout>
         <MainCarousel trending={trending}/>
-        <Trending trending={trending}/>
+        <Trending trending={trending} category={"Trending Now"}/>
+        <Trending trending={suspense} category={"Suspense"}/>
+        <Trending trending={scifi} category={"Sci-Fi"}/>
     </DashboardLayout>
   )
 }

@@ -75,44 +75,20 @@ function WatchMovie() {
                 <img key={id} src={`https://image.tmdb.org/t/p/w500/${movie[0]?.backdrop_path}`}
                 style={{
                     width: "100%",
-                    height:"500px",
                     flexShrink: "0",
                 }}></img>
                 <div className='movie-details-buttons'>
-                      <Text style={{
-                          color: "#FFF",
-                          fontFamily: "Oswald",
-                          fontSize: "2.875rem",
-                          fontStyle: "normal",
-                          fontWeight: "500",
-                          lineHeight: "normal",
-                      }}>{movie[0]?.title}</Text>  
+                      <Text className='movie-title'>{movie[0]?.title}</Text>  
                       <div className='movie-buttons'>
                             <div className='watchlist' style={{display:"flex",flexDirection:"column", alignItems:"center"}}>
                               <AddIcon style={{color: "white"}}/>
-                              <Text style={{
-                                color: "#FFF",
-                                fontFamily: "Overpass",
-                                fontSize: "15px",
-                                fontStyle: "normal",
-                                fontWeight: "300",
-                                lineHeight: "24px", /* 160% */
-                                letterSpacing: "0.45px"
-                              }}>WATCHLIST</Text>
+                              <Text className='watchlist-btn'>WATCHLIST</Text>
                             </div>
                             <div className='share' style={{display:"flex", flexDirection:"column",alignItems:"center"}}>
                                 <ShareIcon style={{color: "white"}}/>
-                                <Text style={{
-                                color: "#FFF",
-                                fontFamily: "Overpass",
-                                fontSize: "15px",
-                                fontStyle: "normal",
-                                fontWeight: "300",
-                                lineHeight: "24px", /* 160% */
-                                letterSpacing: "0.45px"
-                              }}>SHARE</Text>
+                                <Text className='share-btn'>SHARE</Text>
                             </div>
-                            <Button style={{background: "#DA3714",padding:"20px",borderRadius:"50%", border:"none", color: "white"}}
+                            <Button className='movie-watchnow-btn' style={{}}
                             onClick={handleWatchNow}>
                               <PlayArrowIcon/></Button>
                       </div>
